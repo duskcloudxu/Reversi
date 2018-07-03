@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='stylesheets/style.less'/>
+    <link rel='stylesheet' href='stylesheets/test.less'/>
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+
+</head>
+<body>
+<div class="div container">
+    <div class="d-flex flex-row justify-content-center " id="test">
+        <div class="p-2">Flex item 1</div>
+        <div class="p-2">Flex item 2</div>
+        <div class="p-2">Flex item 3</div>
+    </div>
+</div>
+</body>
+<script src="lib/jquery/jquery.js"></script>
+<script src="lib/popper/popper.js"></script>
+<script src="lib/bootstrap/bootstrap.js"></script>
+<script>
+    $(document).ready(() => {
+        $("#test").css("color", "red");
+        console.log("test");
+    });
+</script>
+
+</html>
