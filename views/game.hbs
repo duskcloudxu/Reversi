@@ -2,15 +2,58 @@
 <html>
 <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='stylesheets/style.less'/>
-    <link rel='stylesheet' href='stylesheets/game.less'/>
+    <link rel='stylesheet' href='stylesheets/style.css'/>
+    <link rel='stylesheet' href='stylesheets/game.css'/>
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
 
 </head>
-<body>
-游戏界面
+<body class="lobby_b">
+<nav class="navbar navbar-expand-sm bacolorgreen">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <img  class="img " src="img/u28.png"/>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link font_white bottom" href="#">NAME</a>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link font_white" href="#">SCORE</span>
+        </li>
+        <li class="nav-item">
+            <img  class="bottom img " src="img/u56.png"/>
+        </li>
+    </ul>
+</nav>
+<div class="contain">
+<div id="board">
+    <script>
+        for (var i = 0;i < 64;++i){
+            if (i % 8 == 0)
+                document.write('<div style="clear:both"></div>');
+            document.write("<div class = 'grids' onclick = 'ClickGrid(this)'>"
+                    +"<img src='img/b.png' style='display:none' id='b"+i+"'/><img src='img/w.png' style='display:none' id='w"+i+"'/>"
+                    +"</div>");
+        }
+    </script>
+    <div id='choose_color'>
+        <button type='button' class='btn btn-danger' onclick='PickColor(-1);$("#choose_color").fadeOut()'>Pick black</button>
+        <button type='button' class='btn btn-danger' onclick='PickColor(1);$("#choose_color").fadeOut()' style='margin-left:10px'>Pick white</button>
+    </div>
+</div>
+<div class="side">
+    <div class="time_t">TIME</div>
+    <h3 id="time">30</h3>
+    <div class="resign"></div>
+    <div class="count">
+        <div class="count_w"></div>
+        <div class="count_b"></div>
+    </div>
+
+</div>
+</div>
 </body>
 <script src="lib/jquery/jquery.js"></script>
 <script src="lib/popper/popper.js"></script>
 <script src="lib/bootstrap/bootstrap.js"></script>
+<script src="js/game.js"></script>
 </html>

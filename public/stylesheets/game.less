@@ -2,17 +2,70 @@
   background-color: rgba(126, 190, 181, 1);
   padding: 0px;
 
-}
-.bacolorgreen{
-  background-color: rgba(2, 112, 85, 1);
-}
-.font_white{
-  color:#FFFFFF;
-}
-.bottom{
-  position:absolute;
-  bottom: 0px;
-}
-.img{
-  bottom: 10px;
+  .bacolorgreen{
+    background-color: rgba(2, 112, 85, 1);
+  }
+  .font_white{
+    color:#FFFFFF;
+  }
+  .bottom{
+    position:absolute;
+    bottom: 0px;
+  }
+  .img{
+    bottom: 10px;
+  }
+
+  .grids
+  {
+    width: 48px;
+    height: 48px;
+    float: left;
+    border: 1px solid transparent;
+    cursor: default;
+    margin:1px;
+    background-color: green;
+    padding:5px;
+  }
+  #choose_color
+  {
+    position: relative;
+    top: -100px;
+    margin: auto;
+    width: 210px;
+  }
+  #brand
+  {
+    color:black;
+  }
+  .grids img
+  {
+    position:absolute;
+    display:block;
+    width:36px;
+    height:36px;
+  }
+  .contain{
+    display: flex;
+    flex-direction: row;
+
+    #board
+    {
+      width: 400px;
+      height: 400px;
+      margin: 0;
+      margin-top: 80px;
+      margin-left: 15%;
+    }
+    .side{
+      width:30%;
+      margin-top: 100px;
+      height:100%;
+      display: flex;
+      .time_t{
+        justify-content: center;
+      }
+    }
+  }
+
 }
