@@ -3,7 +3,7 @@
 <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='stylesheets/style.css'/>
-    <link rel='stylesheet' href='stylesheets/login.css'/>
+    <link rel='stylesheet' href='stylesheets/register.css'/>
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
 
 </head>
@@ -19,7 +19,7 @@
         <div id="loginbox_div" class="">
             <div id="text" class="">
                 <div id="titletext"  style="visibility: visible;">
-                    <p><span>LOGIN NOW</span></p>
+                    <p><span>REGISTER NOW</span></p>
                 </div>
             </div>
             <div id="username_div" class="ax_default label">
@@ -29,21 +29,31 @@
                 </div>
             </div>
             <div id="username">
-                <input id="username_input" type="text" name="username" >
+                <input id="username_input_reg" type="text" name="username" >
+                <!--注册输入用户名-->
             </div>
             <div id="pass_div" class="ax_default label">
                 <div id="pass_text" class="text" style="visibility: visible;">
                     <img id="pass_img" class="img " src="img/u18.png"/>
-                    <p><span>USERNAME</span></p>
+                    <p><span>PASSWORD</span></p>
                 </div>
             </div>
             <div id="pass" >
-                <input id="pass_input" type="text" name="username" >
+                <input id="pass_input_reg" type="text" name="username" >
+                <!--注册输入密码-->
             </div>
-            <button class="btn" type="button">LOG IN</button>
-            <div id="info" class="text" style="visibility: visible;">
-                <p><span style="color:#FFFFFF;">By clicking &quot;</span><span style="color:#FFCC33;">here</span><span style="color:#FFFFFF;">&quot; to sign up</span></p>
+            <div id="pass_div" class="ax_default label">
+                <div id="pass_text" class="text" style="visibility: visible;">
+                    <img id="pass_img" class="img " src="img/u18.png"/>
+                    <p><span>COMFIRM PASSWORD</span></p>
+                </div>
             </div>
+            <div id="pass_confirm" >
+                <input id="pass_input_cf" type="text" name="username" >
+                <!--确认密码-->
+            </div>
+            <button class="btn btn_regi" type="button">REGISTER</button>
+
         </div>
     </div>
 </div>
