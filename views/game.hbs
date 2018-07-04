@@ -3,8 +3,9 @@
 <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='stylesheets/style.css'/>
-    <link rel='stylesheet' href='stylesheets/game.css'/>
+
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
+    <link rel='stylesheet' href='stylesheets/game.css'/>
 
 </head>
 <body class="lobby_b">
@@ -36,20 +37,39 @@
         }
     </script>
     <div id='choose_color'>
-        <button type='button' class='btn btn-danger' onclick='PickColor(-1);$("#choose_color").fadeOut()'>Pick black</button>
-        <button type='button' class='btn btn-danger' onclick='PickColor(1);$("#choose_color").fadeOut()' style='margin-left:10px'>Pick white</button>
+        <button id="ready" type='button' class='btn btn-danger' onclick='PickColor(1);$("#choose_color").fadeOut();countDown();' style='margin-left:10px'>Ready</button>
     </div>
 </div>
 <div class="side">
     <div class="time_t">TIME</div>
     <h3 id="time">30</h3>
-    <div class="resign"></div>
+    <button id="re" class="resign btn btn-warning" onclick="res()">RESIGN</button>
     <div class="count">
-        <div class="count_w"></div>
-        <div class="count_b"></div>
+        <div  class="count_w">
+            <img src="img/b.png"/>
+            <span id="c_black"> 2</span>
+        </div>
+        <div  class="count_b">
+            <img src="img/w.png"/>
+            <span id="c_white">2</span>
+        </div>
     </div>
 
 </div>
+    <div class="modal fade" id="end_info" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="block modal-header ">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title float_left">Game Over</h4>
+                </div>
+                <h5 class="modal-body" id = "result"></h5>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Init()">Play again</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script src="lib/jquery/jquery.js"></script>

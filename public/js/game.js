@@ -3,6 +3,9 @@ var running_flag = false;
 var dir_x = [1, 1, 0, 0, 1, -1, -1, -1];
 var dir_y = [1, -1, 1, -1, 0, 0, -1, 1];
 var m = [];
+var flag = 0;
+
+var t;
 function Init()
 {
     for (var i = 0;i < 64;++i){
@@ -23,6 +26,8 @@ function Init()
     for (var i = 0;i < 64;++i)
         $('.grids')[i].style.backgroundColor = 'green';
     ShowNum();
+    sec = 30;
+    clearTimeout(t);
 }
 function PickColor(_c)
 {
@@ -30,7 +35,8 @@ function PickColor(_c)
     if (player_color == -1)
         ShowHint();
     else
-        setTimeout("AI_1("+player_color * -1+")", 1000);
+        //setTimeout("AI_1("+player_color * -1+")", 1000);
+        ShowHint();
     running_flag = true;
 }
 //white: 1
@@ -115,7 +121,15 @@ function ClickGrid(_this)
         ShowNum();
         ShowHint();
     }
-    setTimeout("AI_1("+player_color * -1+")", 1000);
+    //setTimeout("AI_1("+player_color * -1+")", 1000);
+    player_color = player_color*-1;
+    ShowHint();
+    if(p.length==0)
+    {
+        player_color = player_color*-1;
+        ShowHint();
+    }
+    sec = 30;
 }
 
 function ShowNum()
@@ -125,13 +139,13 @@ function ShowNum()
         if (m[i] == -1) ++bn;
         if (m[i] == 1) ++wn;
     }
-    $('#black_num')[0].innerText = bn;
-    $('#white_num')[0].innerText = wn;
+    $('#c_black')[0].innerText = bn;
+    $('#c_white')[0].innerText = wn;
     if (bn > wn) return -1;
     if (bn == wn) return 0;
     if (bn < wn) return 1;
 }
-
+var end;
 function Move(_index, _c)
 {
     var a = Attack(_index, _c);
@@ -144,9 +158,10 @@ function Move(_index, _c)
         Display(a[i], _c);
     }
     ShowNum();
+    end = IsEnd();
     for (var i = 0;i < 64;++i)
         $('.grids')[i].style.backgroundColor = 'green';
-    if (IsEnd()){
+    if (end){
         running_flag = false;
         if (ShowNum() == 0)
             $('#result')[0].innerText = 'The result is Even.';
@@ -157,7 +172,16 @@ function Move(_index, _c)
         $('#end_info').modal('show');
     }
 }
-
+function res() {
+    running_flag = false;
+    if (ShowNum() == 0)
+        $('#result')[0].innerText = 'The result is Even.';
+    if (ShowNum() == player_color)
+        $('#result')[0].innerText = 'You win!';
+    if (ShowNum() == -1 * player_color)
+        $('#result')[0].innerText = 'You lose!';
+    $('#end_info').modal('show');
+}
 function AI_1(_c)
 {
     var p = PossiblePlace(_c);
@@ -180,16 +204,19 @@ function IsEnd()
         return true;
     }
     return false;
+
 }
-window.onload=function(){         //一进该页面就加载以下方法
-                           //显示右下角日期的方法
-    setInterval('countDown()',1000);    //一般秒设置为参数为1000
-}
-var sec = 30;                  //设置倒计时时间为30秒
-function countDown() {        //倒计时的方法
+var sec = 30;
+
+function countDown(){         //一进该页面就加载以下方法
     if(sec > 0) {
         time.innerHTML = sec--;
     } else {
-       //轮换
-    }
+        player_color = player_color*-1;
+        ShowHint();
+        sec = 30;//轮换
+    }                     //显示右下角日期的方法
+    t = setTimeout('countDown()',1000);    //一般秒设置为参数为1000
 }
+                 //设置倒计时时间为30秒
+
