@@ -17,11 +17,14 @@ router.get('/login', (req, res) => {
     let password = req.query.password;
     userModel.findOne({username: username}, (err, doc) => {
         console.log(doc);
-        if (doc.password === password) {
-            res.send("success");
+        if(!doc){
+            res.send("无此用户")
+        }
+        else if (doc.password === password) {
+            res.send("登陆成功");
         }
         else {
-            res.send("failed")
+            res.send("密码错误")
         }
     })
 });
