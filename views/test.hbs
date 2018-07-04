@@ -14,7 +14,22 @@
         <div class="p-2">Flex item 2</div>
         <div class="p-2">Flex item 3</div>
     </div>
+    <div class="d-flex flex-column justify-content-center">
+        username<input type="text" id="username">
+        password<input type="text" id="password">
+        <div class="d-flex flex-row justify-content-around">
+            <button id="login" class="flex-grow-1 btn btn-success">login</button>
+            <button id="register" class="flex-grow-1 btn btn-success">register</button>
+        </div>
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+        <input type="file" id="imgUp">
+        <button class="btn btn-success" id="confirm">确认</button>
+        <img id="display">
+
+    </div>
 </div>
+
 </body>
 <script src="lib/jquery/jquery.js"></script>
 <script src="lib/popper/popper.js"></script>
@@ -23,6 +38,71 @@
     $(document).ready(() => {
         $("#test").css("color", "red");
         console.log("test");
+        $("#login").click((e) => {
+            let username = $("#username").val();
+            let password = $("#password").val();
+            console.log([username, password]);
+            $.ajax({
+                url: 'http://localhost:3000/test/login',
+                data: {
+                    username: username,
+                    password: password,
+                },
+                type: 'get',
+                success: (data) => {
+                    alert(data);
+                },
+                fail: () => {
+                    alert("unknown error")
+                }
+            })
+        });
+        $("#register").click((e) => {
+            let username = $("#username").val();
+            let password = $("#password").val();
+            console.log([username, password]);
+            $.ajax({
+                url: 'http://localhost:3000/test/register',
+                data: {
+                    username: username,
+                    password: password,
+                },
+                type: 'get',
+                success: (data) => {
+                    alert(data);
+                },
+                fail: () => {
+                    alert("unknown error")
+                }
+            })
+        });
+        var imgData;
+        $("#imgUp").change((e) => {
+            var reader = new FileReader();
+            reader.onload = (e) => {
+                $("#display").attr("src", e.target.result);
+                imgData = e.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+        $("#confirm").click(()=>{
+            if(imgData){
+                $.ajax({
+                    type:'post',
+                    url:'http://localhost:3000/test/uploadImage',
+                    data:{
+                        img:imgData,
+                    },
+                    success:(data)=>{
+                        alert(data);
+                    }
+
+                })
+            }
+            else{
+                alert("未选择图片");
+            }
+        })
     });
 </script>
 

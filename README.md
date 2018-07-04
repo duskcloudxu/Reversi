@@ -27,3 +27,23 @@ http://localhost:3000/game
 具体bootstrap,Jquery的使用案例请参考test.hbs这个模板
 
 （但是javascript记得分到public下的文件夹对每个页面单独写一个）
+##TODOLIST:
+- jquery 双向绑定
+- 密码加密存储
+- 注册字符检查
+##感想
+- mongoose的数据库链接真的是贴心到气人：
+```
+model = mongoose.model('user', users);
+```
+连接到的是名为"users"的表
+```
+model = mongoose.model('users', users);
+```
+连接到的是名为"users"的表
+```
+model = mongoose.model('userssss', users);
+```
+连接到的是名为"usersssses"的表
+
+我真的是 谢谢你啊。
