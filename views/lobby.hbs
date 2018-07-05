@@ -20,41 +20,46 @@
             <span class="nav-link font_white" href="#">SCORE</span>
         </li>
         <li class="nav-item">
+            <a href="./" >
             <img  class="bottom img " src="img/u56.png"/>
+            </a>
         </li>
     </ul>
 </nav>
 <div class="containe">
     <div class="lobby">
-        <div class="desk">
-            <img  class="img_left " src="img/u34.png"/>
-            <img  class="img_mid " src="img/u32.png"/>
-            <img  class="img_right " src="img/u34.png"/>
+        <div id="numOne"  class="desk">
+            <img  class="img_left " src="img/u34.png" title="0"/>
+            <img  class="img_mid " src="img/u32.png" title="0"/>
+            <img  class="img_right " src="img/u34.png" title="0"/>
         </div>
-        <div class="desk">
-            <img  class="img_left " src="img/u34.png"/>
-            <img  class="img_mid " src="img/u32.png"/>
-            <img  class="img_right " src="img/u34.png"/>
+        <div id="numTwo" class="desk">
+            <img  class="img_left " src="img/u34.png" title="0"/>
+            <img  class="img_mid " src="img/u32.png" title="0"/>
+            <img  class="img_right " src="img/u34.png" title="0"/>
         </div>
-        <div class="desk">
-            <img  class="img_left " src="img/u34.png"/>
-            <img  class="img_mid " src="img/u32.png"/>
-            <img  class="img_right " src="img/u34.png"/>
+        <div id="numThree" class="desk">
+            <img  class="img_left " src="img/u34.png" title="0"/>
+            <img  class="img_mid " src="img/u32.png" title="0"/>
+            <img  class="img_right " src="img/u34.png" title="0"/>
         </div>
-        <div class="desk">
-            <img  class="img_left " src="img/u34.png"/>
-            <img  class="img_mid " src="img/u32.png"/>
-            <img  class="img_right " src="img/u34.png"/>
+        <div id="numFour" class="desk">
+            <img  class="img_left " src="img/u34.png" title="0"/>
+            <img  class="img_mid " src="img/u32.png" title="0"/>
+            <img  class="img_right " src="img/u34.png" title="0"/>
         </div>
     </div>
     <div class="chatroom">
-
-        <input id="msg" class="chat" type="text">
-        <div id="display_msg"></div>
+        <div class="msg_send">
+            <input id="msg" class="chat form-control" type="text">
+            <button id="send" class="btn btn-success">SEND</button>
+        </div>
+        <div id="display_msg" class="pre-scrollable hmax"></div>
     </div>
 </div>
 </body>
 <script src="lib/jquery/jquery.js"></script>
 <script src="lib/popper/popper.js"></script>
 <script src="lib/bootstrap/bootstrap.js"></script>
+<script src="js/lobbyPage.js"></script>
 </html>

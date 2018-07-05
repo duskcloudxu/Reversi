@@ -1,26 +1,72 @@
-.containe{
-  display: flex;
-  flex-direction: row;
-  .chatroom{
-    width:400px;
-    height:600px;
-    background-color: #e2e3e5;
-    display: flex;
-    flex-direction: column-reverse;
-    #display_msg{
-      width:100%;
-      height: 100%;
-      background-color: #71dd8a;
-    }
-    .chat{
-      width:100%;
-    }
-  }
-}
+
 .lobby_b{
   background-color: rgba(126, 190, 181, 1);
   padding: 0px;
+  .containe{
+    display: flex;
+    flex-direction: row;
+    .chatroom{
+      width:400px;
+      height:600px;
+      display: flex;
+      flex-direction: column-reverse;
+      .msg_send{
+        display: flex;
+        flex-direction: row;
+      }
+      #display_msg{
+        width:100%;
+        height: 100%;
+        background-color: white;
+        border-radius: 5px;
+        opacity: 0.5;
+        transition: black 0.15s ease-in-out, white 0.15s ease-in-out;
+        background-clip: padding-box;
+      }
+      .chat{
+        margin: 4px;
+        width:100%;
+        padding: 8px;
+      }
+      .chat:hover{
+        width:100%;
+        padding: 8px;
+      }
+      .hmax{
+        max-height:800px;
+        overflow-y: auto;
+      }
+    }
+    .lobby{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width:100%;
+      .desk{
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        width:45%;
+        height:300px;
+        .img_left{
+          cursor:pointer;
+          margin-right: 20px;
+          width:76px;
+          height:76px;
+          border-radius: 8px;
+        }
+        .img_right{
+          cursor:pointer;
+          margin-left: 20px;
+          width:76px;
+          height:76px;
+          border-radius: 8px
+        }
 
+      }
+    }
+  }
 }
 .bacolorgreen{
   background-color: rgba(2, 112, 85, 1);
@@ -35,26 +81,15 @@
 .img{
   bottom: 10px;
 }
-.lobby{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width:100%;
-
+.atalk{
+  margin:10px;
+  span{
+    display:inline-block;
+    background:#0181cc;
+    border-radius:10px;
+    color:#fff;
+    padding:5px 10px;
+  }
 }
-.desk{
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: row;
-  width:45%;
-  height:300px;
 
 
-}
-.img_left{
-  margin-right: 20px;
-}
-.img_right{
-  margin-left: 20px;
-}

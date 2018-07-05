@@ -1,5 +1,5 @@
-var player_color;
-var running_flag = false;
+var playerColor;
+var runningFlag = false;
 var dir_x = [1, 1, 0, 0, 1, -1, -1, -1];
 var dir_y = [1, -1, 1, -1, 0, 0, -1, 1];
 var m = [];
@@ -8,6 +8,8 @@ var flag = 0;
 var t;
 function Init()
 {
+    sec = 30;
+    time.innerHTML = sec;
     for (var i = 0;i < 64;++i){
         Display(i, 0);
         $('.grids')[i].index = i;
@@ -22,22 +24,22 @@ function Init()
     m[35] = -1;
     m[36] = 1;
     $("#choose_color").fadeIn();
-    running_flag = false;
+    runningFlag = false;
     for (var i = 0;i < 64;++i)
         $('.grids')[i].style.backgroundColor = 'green';
     ShowNum();
-    sec = 30;
+
     clearTimeout(t);
 }
 function PickColor(_c)
 {
-    player_color = _c;
-    if (player_color == -1)
+    playerColor = _c;
+    if (playerColor == -1)
         ShowHint();
     else
-        //setTimeout("AI_1("+player_color * -1+")", 1000);
+        //setTimeout("AI_1("+playerColor * -1+")", 1000);
         ShowHint();
-    running_flag = true;
+    runningFlag = true;
 }
 //white: 1
 //black: -1
@@ -55,6 +57,7 @@ function Display(_index, _color)
     $(tag).fadeIn('slow');
 }
 $(document).ready(function(){
+    sec = 30
     Init();
 });
 
@@ -103,30 +106,32 @@ function PossiblePlace(_c)
 
 function ShowHint()
 {
-    var p = PossiblePlace(player_color);
-    for (var i = 0;i < 64;++i)
+    var p = PossiblePlace(playerColor);
+    for (var i = 0;i < 64;++i) {
         $('.grids')[i].style.backgroundColor = 'green';
-    for (var i = 0;i < p.length;++i)
+    }
+    for (var i = 0;i < p.length;++i) {
         $('.grids')[p[i]].style.backgroundColor = 'rgb(0, 40, 0)';
+    }
 }
 
 function ClickGrid(_this)
 {
-    if (!running_flag) return;
+    if (!runningFlag) return;
     if (m[_this.index] != 0) return;
-    if (!Attack(_this.index, player_color).length) return;
-    Move(_this.index, player_color);
-    var p = PossiblePlace(player_color*-1);
+    if (!Attack(_this.index, playerColor).length) return;
+    Move(_this.index, playerColor);
+    var p = PossiblePlace(playerColor*-1);
     if (!p.length){
         ShowNum();
         ShowHint();
     }
-    //setTimeout("AI_1("+player_color * -1+")", 1000);
-    player_color = player_color*-1;
+    //setTimeout("AI_1("+playerColor * -1+")", 1000);
+    playerColor = playerColor*-1;
     ShowHint();
     if(p.length==0)
     {
-        player_color = player_color*-1;
+        playerColor = playerColor*-1;
         ShowHint();
     }
     sec = 30;
@@ -162,24 +167,19 @@ function Move(_index, _c)
     for (var i = 0;i < 64;++i)
         $('.grids')[i].style.backgroundColor = 'green';
     if (end){
-        running_flag = false;
+        runningFlag = false;
         if (ShowNum() == 0)
             $('#result')[0].innerText = 'The result is Even.';
-        if (ShowNum() == player_color)
+        if (ShowNum() == playerColor)
             $('#result')[0].innerText = 'You win!';
-        if (ShowNum() == -1 * player_color)
+        if (ShowNum() == -1 * playerColor)
             $('#result')[0].innerText = 'You lose!';
         $('#end_info').modal('show');
     }
 }
 function res() {
-    running_flag = false;
-    if (ShowNum() == 0)
-        $('#result')[0].innerText = 'The result is Even.';
-    if (ShowNum() == player_color)
-        $('#result')[0].innerText = 'You win!';
-    if (ShowNum() == -1 * player_color)
-        $('#result')[0].innerText = 'You lose!';
+    runningFlag = false;
+    $('#result')[0].innerText = 'You lose!';
     $('#end_info').modal('show');
 }
 function AI_1(_c)
@@ -212,7 +212,7 @@ function countDown(){         //一进该页面就加载以下方法
     if(sec > 0) {
         time.innerHTML = sec--;
     } else {
-        player_color = player_color*-1;
+        playerColor = playerColor*-1;
         ShowHint();
         sec = 30;//轮换
     }                     //显示右下角日期的方法
