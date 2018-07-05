@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var userModel = require('../model/userModel');
 var parallel = require('async/parallel');
+var io=global.socketio;
 /* GET users listing. */
 
 
@@ -65,4 +66,7 @@ router.post('/uploadImage',(req,res)=>{
         res.send("failed")
     }
 });
+
+
+
 module.exports = router;

@@ -15,6 +15,8 @@
     "http-errors": "~1.6.2",
     "less-middleware": "~2.2.1",
     "mongoose": "^5.2.0",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "socket.io": "^2.1.1",
+    "sweetalert2": "^7.24.4"
   }
 }

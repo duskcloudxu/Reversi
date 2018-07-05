@@ -26,14 +26,21 @@
         <input type="file" id="imgUp">
         <button class="btn btn-success" id="confirm">确认</button>
         <img id="display">
-
     </div>
+    <div class="d-flex flex-column justify-content-center" id="chatBoard">
+    </div>
+    <div class="d-flex flex-column justify-content-center">
+        <input type="text" id="chatMessage">
+        <button class="btn btn-success" id="send">发送</button>
+    </div>
+
 </div>
 
 </body>
 <script src="lib/jquery/jquery.js"></script>
 <script src="lib/popper/popper.js"></script>
 <script src="lib/bootstrap/bootstrap.js"></script>
+<script src="lib/socketIO/socket.io.js"></script>
 <script>
     $(document).ready(() => {
         $("#test").css("color", "red");
@@ -85,23 +92,28 @@
             };
             reader.readAsDataURL(e.target.files[0]);
         });
-        $("#confirm").click(()=>{
-            if(imgData){
+        $("#confirm").click(() => {
+            if (imgData) {
                 $.ajax({
-                    type:'post',
-                    url:'http://localhost:3000/test/uploadImage',
-                    data:{
-                        img:imgData,
+                    type: 'post',
+                    url: 'http://localhost:3000/test/uploadImage',
+                    data: {
+                        img: imgData,
                     },
-                    success:(data)=>{
+                    success: (data) => {
                         alert(data);
                     }
                 })
             }
-            else{
+            else {
                 alert("未选择图片");
             }
         })
+        socket = io();
+        $("#send").click(() => {
+            console.log($("#chatMessage").val());
+            socket.emit('chatMessage',$("#chatMessage").val());
+        });
     });
 </script>
 
