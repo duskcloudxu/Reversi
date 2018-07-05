@@ -108,12 +108,16 @@
             else {
                 alert("未选择图片");
             }
-        })
+        });
         socket = io();
         $("#send").click(() => {
             console.log($("#chatMessage").val());
-            socket.emit('chatMessage',$("#chatMessage").val());
+            socket.emit('chatMessage', $("#chatMessage").val());
         });
+        socket.on("chatMessageClient", (msg) => {
+            console.log(msg);
+            $('#chatBoard').append($('<li>').text(msg));
+        })
     });
 </script>
 
