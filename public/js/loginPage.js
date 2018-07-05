@@ -31,7 +31,8 @@ $(document).ready(() => {
                         confirmButtonText: '进入大厅'
                     }).then((res)=>{
                         isTyping = true;
-                        window.location = "lobby"
+                        window.location = "lobby";
+                        Cookies.set("username",username);
                     });
                 }
                 else {
