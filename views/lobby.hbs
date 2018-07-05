@@ -13,7 +13,7 @@
 <nav class="navbar navbar-expand-sm bacolorgreen">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <img  class="img " src="img/test.jpg"/>
+            <img class="img " src="img/test.jpg"/>
         </li>
         <li class="nav-item">
             <span id="user_name" class="nav-link font_white bottom" href="#">NAME</span>
@@ -22,35 +22,35 @@
             <span id="user_score" class="nav-link font_white" href="#">SCORE</span>
         </li>
         <li class="nav-item">
-            <a href="./" >
-            <img  class="bottom bottomz " src="img/u56.png"/>
+            <a href="./">
+                <img class="bottom bottomz " src="img/u56.png"/>
             </a>
         </li>
     </ul>
 </nav>
 <div class="containe">
     <div class="lobby">
-            <div id="numOne"  class="desk">
-                <img  class="img_left " src="img/u34.png" title="0"/>
-                <img  class="img_mid " src="img/u32.png" title="0"/>
-                <img  class="img_right " src="img/u34.png" title="0"/>
+        {{#each deskNum}}
+            <div class="desk">
+                <div class="seat d-flex flex-column justify-content-center">
+                    <img class="img_left img_seat" src="img/u34.png" title="0"/>
+                    <div class="btnGroup">
+                        <button class="btn btn-success ready">准备</button>
+                        <button class="btn btn-danger leave">离开</button>
+                    </div>
+                </div>
+                <img class="img_mid " src="img/u32.png" title="0"/>
+                <div class="seat d-flex flex-column justify-content-center">
+                    <img class="img_right img_seat" src="img/u34.png" title="0"/>
+                    <div class="btnGroup">
+                        <button class="btn btn-success ready">准备</button>
+                        <button class="btn btn-danger leave">离开</button>
+                    </div>
+                </div>
+
             </div>
 
-        <div id="numTwo" class="desk">
-            <img  class="img_left " src="img/u34.png" title="0"/>
-            <img  class="img_mid " src="img/u32.png" title="0"/>
-            <img  class="img_right " src="img/u34.png" title="0"/>
-        </div>
-        <div id="numThree" class="desk">
-            <img  class="img_left " src="img/u34.png" title="0"/>
-            <img  class="img_mid " src="img/u32.png" title="0"/>
-            <img  class="img_right " src="img/u34.png" title="0"/>
-        </div>
-        <div id="numFour" class="desk">
-            <img  class="img_left " src="img/u34.png" title="0"/>
-            <img  class="img_mid " src="img/u32.png" title="0"/>
-            <img  class="img_right " src="img/u34.png" title="0"/>
-        </div>
+        {{/each}}
     </div>
     <div class="chatroom">
         <div>
