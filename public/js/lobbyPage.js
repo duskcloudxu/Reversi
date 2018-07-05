@@ -1,23 +1,26 @@
 $(function () {
     var toggle = true;
     var count = 0;
-    var username=Cookies.get("username");
-    console.log(username);
+    var username = Cookies.get("username");
+    var socket = io();
     $("#user_name").text(username);
-    if(username===undefined){
+    //检测用户是否通过直接访问URL的方式进入大厅
+    if (username === undefined) {
         swal({
-            type:"error",
-            text:"你还没有登录",
-        }).then(()=>{
-            window.location="/";
+            type: "error",
+            text: "你还没有登录",
+        }).then(() => {
+            window.location = "/";
         })
     }
+
     $(window).keypress((e) => {//监听回车
         console.log(e.keyCode);
         if (e.keyCode === 13) {
             $("#send").click();
         }
     });
+
     $("img.img_left").click(function () {
         if (toggle && $(this).attr("title") == "0") {
             $(this).attr("src", "../img/test.jpg");
@@ -29,6 +32,7 @@ $(function () {
             $(this).attr("title", "0");
         }
     });
+
     $("img.img_right").click(function () {
         if (toggle && $(this).attr("title") == "0") {
             $(this).attr("src", "../img/test.jpg");
@@ -54,18 +58,26 @@ $(function () {
     });
     $("#send").click(function () {
         //定义空字符串
-        var str = "";
-        if ($("#msg").val() == "") {
+        var content=$("#msg").val();
+        if ( content == "") {
             // 消息为空时弹窗
             alert("消息不能为空");
             return;
         }
         else{
-            str = '<div class="talk_name"><span>'+username+':'+'</span></div>'+'<div class="atalk"><span>'+ $("#msg").val() +'</span></div>' ;
+            var msg={
+                username:username,
+                content:content
+            };
+            socket.emit('chatMessage',msg);
+
         }
-
-        $("#display_msg").html($("#display_msg").html() + str);
         $("#msg").val("");
-
     });
+    socket.on("chatMessageClient", (msg) => {
+        console.log(msg);
+        var str = '<div class="talk_name"><span>'+msg.username+':'+'</span></div>'+'<div class="atalk"><span>'+ msg.content +'</span></div>' ;
+        $("#display_msg").html($("#display_msg").html() + str);
+    })
+
 });
