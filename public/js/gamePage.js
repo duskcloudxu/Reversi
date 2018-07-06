@@ -17,8 +17,8 @@ var myMove = Cookies.get("myMove");//服务器随机出的先攻，1代表黑棋
 var end;
 var sec = 30;
 
-socket.emit("socketUpdate",username);
-playerColor=-1;
+socket.emit("socketUpdate", username);
+playerColor = -1;
 myMove === "1" ? myMove = -1 : myMove = 1;
 $("#user_name").text(username);
 
@@ -26,81 +26,82 @@ $("#user_name").text(username);
  * 初始化
  */
 swal({
-  title: "执白执黑",
-  text: "您是" + (myMove === -1 ? "黑棋" : "白棋"),
+    title: "执白执黑",
+    text: "您是" + (myMove === -1 ? "黑棋" : "白棋"),
 }).then(() => {
-  PickColor(myMove);
-  countDown();
+    PickColor(myMove);
+    countDown();
 });
 
 /**
  * socket.io模块
  */
 /*
-下棋接收
+ 下棋接收
  */
 socket.on("move", (index) => {
-  console.log(1);
-  Move(index,myMove===-1?1:-1);
-  playerColor*=-1;
-  ShowHint();
-  sec=30;
+    console.log(1);
+    Move(index, myMove === -1 ? 1 : -1);
+    playerColor *= -1;
+    ShowHint();
+    sec = 30;
 });
 /*
-认输接收
+ 认输接收
  */
-socket.on("resign",()=>{
-  swal({
-    text:"对方已认输"
-  }).then(()=>{
-    window.location="lobby";
-  })
+socket.on("resign", () => {
+    swal({
+        text: "对方已认输"
+    }).then(() => {
+        window.location = "lobby";
+    })
 });
 /*
-异常接收
+ 异常接收
  */
-socket.on("abort",()=>{
-  swal({
-    text:"对局异常，即将返回大厅"
-  }).then(()=>{
-    window.location="lobby";
-  })
+socket.on("abort", () => {
+    swal({
+        text: "对局异常，即将返回大厅"
+    }).then(() => {
+        window.location = "lobby";
+    })
 });
+
 
 /**
  *ready按钮点击事件
  */
 $("#ready").click(function () {
-  PickColor(-1);
-  $("#choose_color").fadeOut();
-  countDown();
+    PickColor(-1);
+    $("#choose_color").fadeOut();
+    countDown();
 });
 
 /**
  *grid网格数组点击事件
  */
 function ClickGrid(_this) {
-  if (!runningFlag) return;
-  if (m[_this.index] !== 0) return;
-  if (!Attack(_this.index, playerColor).length) return;
-  if (myMove !== playerColor) return;
-  Move(_this.index, playerColor);
-  var p = PossiblePlace(playerColor * -1);
-  if (!p.length) {
-    ShowNum();
-    ShowHint();
-  }
-  //setTimeout("AI_1("+playerColor * -1+")", 1000);
-  playerColor = playerColor * -1;
-  if (p.length === 0) {
+    if (!runningFlag) return;
+    if (m[_this.index] !== 0) return;
+    if (!Attack(_this.index, playerColor).length) return;
+    if (myMove !== playerColor) return;
+    Move(_this.index, playerColor);
+    var p = PossiblePlace(playerColor * -1);
+    if (!p.length) {
+        ShowNum();
+        ShowHint();
+    }
+    //setTimeout("AI_1("+playerColor * -1+")", 1000);
     playerColor = playerColor * -1;
-    ShowHint();
-  }
-  var msg = {
-    username: username,
-    index: _this.index,
-  };
-  socket.emit("move", msg);
+    if (p.length === 0) {
+        playerColor = playerColor * -1;
+        ShowHint();
+    }
+    var msg = {
+        username: username,
+        index: _this.index,
+    };
+    socket.emit("move", msg);
 
 }
 
@@ -108,42 +109,42 @@ function ClickGrid(_this) {
  *显示合法落子位置
  */
 function ShowHint() {
-  var p = PossiblePlace(playerColor);
-  for (var i = 0; i < 64; ++i) {
-    $('.grids')[i].style.backgroundColor = 'green';
-  }
-  for (var i = 0; i < p.length; ++i) {
-    $('.grids')[p[i]].style.backgroundColor = 'rgb(0, 40, 0)';
-  }
-  whosturn();
+    var p = PossiblePlace(playerColor);
+    for (var i = 0; i < 64; ++i) {
+        $('.grids')[i].style.backgroundColor = 'green';
+    }
+    for (var i = 0; i < p.length; ++i) {
+        $('.grids')[p[i]].style.backgroundColor = 'rgb(0, 40, 0)';
+    }
+    whosturn();
 }
 
 /**
  *初始化
  */
 function Init() {
-  sec = 30;
-  time.innerHTML = sec;
-  for (var i = 0; i < 64; ++i) {
-    Display(i, 0);
-    $('.grids')[i].index = i;
-    m[i] = 0;
-  }
-  Display(27, 1);
-  Display(28, -1);
-  Display(35, -1);
-  Display(36, 1);
-  m[27] = 1;
-  m[28] = -1;
-  m[35] = -1;
-  m[36] = 1;
-  $("#choose_color").fadeIn();
-  runningFlag = false;
-  for (var i = 0; i < 64; ++i)
-    $('.grids')[i].style.backgroundColor = 'green';
-  ShowNum();
+    sec = 30;
+    time.innerHTML = sec;
+    for (var i = 0; i < 64; ++i) {
+        Display(i, 0);
+        $('.grids')[i].index = i;
+        m[i] = 0;
+    }
+    Display(27, 1);
+    Display(28, -1);
+    Display(35, -1);
+    Display(36, 1);
+    m[27] = 1;
+    m[28] = -1;
+    m[35] = -1;
+    m[36] = 1;
+    $("#choose_color").fadeIn();
+    runningFlag = false;
+    for (var i = 0; i < 64; ++i)
+        $('.grids')[i].style.backgroundColor = 'green';
+    ShowNum();
 
-  clearTimeout(t);
+    clearTimeout(t);
 }
 
 /**
@@ -153,12 +154,12 @@ function Init() {
  */
 function PickColor(_c) {
 
-  $('#c_black').css("color", "yellow");
-  $('#c_white').css("color", "black");
-  ShowHint();
-  //setTimeout("AI_1("+playerColor * -1+")", 1000);
+    $('#c_black').css("color", "yellow");
+    $('#c_white').css("color", "black");
+    ShowHint();
+    //setTimeout("AI_1("+playerColor * -1+")", 1000);
 
-  runningFlag = true;
+    runningFlag = true;
 }
 
 /**
@@ -168,20 +169,20 @@ function PickColor(_c) {
  * @constructor
  */
 function Display(_index, _color) {
-  if (_color == 0) {
-    $('#b' + _index).fadeOut(0);
-    $('#w' + _index).fadeOut(0);
-    return;
-  }
-  var tag = "#" + (_color == 1 ? 'w' : 'b') + _index;
-  var not_tag = "#" + (_color == -1 ? 'w' : 'b') + _index;
-  $(not_tag).fadeOut(0);
-  $(tag).fadeIn('slow');
+    if (_color == 0) {
+        $('#b' + _index).fadeOut(0);
+        $('#w' + _index).fadeOut(0);
+        return;
+    }
+    var tag = "#" + (_color == 1 ? 'w' : 'b') + _index;
+    var not_tag = "#" + (_color == -1 ? 'w' : 'b') + _index;
+    $(not_tag).fadeOut(0);
+    $(tag).fadeIn('slow');
 }
 
 $(document).ready(function () {
-  sec = 30
-  Init();
+    sec = 30
+    Init();
 
 });
 
@@ -193,35 +194,35 @@ $(document).ready(function () {
  * @constructor
  */
 function Attack(_index, _c) {
-  var attack = [];
-  var x = _index >> 3;
-  var y = _index % 8;
-  if (m[_index] != 0) return attack;
-  for (var j = 0; j < 8; ++j) {
-    var nx = x + dir_x[j];
-    var ny = y + dir_y[j];
-    if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8) {
-      if (m[(nx << 3) + ny] == (_c * -1)) {
-        var tx = nx, ty = ny;
-        var ta = [(nx << 3) + ny];
-        var tf = false;
-        for (; ;) {
-          tx += dir_x[j], ty += dir_y[j];
-          if (tx >= 0 && tx < 8 && ty >= 0 && ty < 8) {
-            if (m[(tx << 3) + ty] == _c) {
-              tf = true;
-              break;
+    var attack = [];
+    var x = _index >> 3;
+    var y = _index % 8;
+    if (m[_index] != 0) return attack;
+    for (var j = 0; j < 8; ++j) {
+        var nx = x + dir_x[j];
+        var ny = y + dir_y[j];
+        if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8) {
+            if (m[(nx << 3) + ny] == (_c * -1)) {
+                var tx = nx, ty = ny;
+                var ta = [(nx << 3) + ny];
+                var tf = false;
+                for (; ;) {
+                    tx += dir_x[j], ty += dir_y[j];
+                    if (tx >= 0 && tx < 8 && ty >= 0 && ty < 8) {
+                        if (m[(tx << 3) + ty] == _c) {
+                            tf = true;
+                            break;
+                        }
+                        if (m[(tx << 3) + ty] == 0) break;
+                        ta.push((tx << 3) + ty);
+                    }
+                    else break;
+                }
+                if (tf) attack = attack.concat(ta);
             }
-            if (m[(tx << 3) + ty] == 0) break;
-            ta.push((tx << 3) + ty);
-          }
-          else break;
         }
-        if (tf) attack = attack.concat(ta);
-      }
     }
-  }
-  return attack;
+    return attack;
 }
 
 /**
@@ -231,12 +232,12 @@ function Attack(_index, _c) {
  * @constructor
  */
 function PossiblePlace(_c) {
-  var p = [];
-  for (var i = 0; i < 64; ++i) {
-    var a = Attack(i, _c);
-    if (a.length) p.push(i);
-  }
-  return p;
+    var p = [];
+    for (var i = 0; i < 64; ++i) {
+        var a = Attack(i, _c);
+        if (a.length) p.push(i);
+    }
+    return p;
 }
 
 
@@ -246,31 +247,31 @@ function PossiblePlace(_c) {
  * @constructor
  */
 function ShowNum() {
-  var wn = 0, bn = 0;
-  for (var i = 0; i < 64; ++i) {
-    if (m[i] == -1) ++bn;
-    if (m[i] == 1) ++wn;
-  }
-  $('#c_white')[0].innerText = bn;
-  $('#c_black')[0].innerText = wn;
-  whosturn();
-  if (bn > wn) return -1;
-  if (bn === wn) return 0;
-  if (bn < wn) return 1;
+    var wn = 0, bn = 0;
+    for (var i = 0; i < 64; ++i) {
+        if (m[i] == -1) ++bn;
+        if (m[i] == 1) ++wn;
+    }
+    $('#c_white')[0].innerText = bn;
+    $('#c_black')[0].innerText = wn;
+    whosturn();
+    if (bn > wn) return -1;
+    if (bn === wn) return 0;
+    if (bn < wn) return 1;
 }
 
 /**
  * 谁的回合
  */
 function whosturn() {
-  if (playerColor == 1) {
-    $('#c_black').css("color", "yellow");
-    $('#c_white').css("color", "black");
-  }
-  if (playerColor == -1) {
-    $('#c_white').css("color", "yellow");
-    $('#c_black').css("color", "black");
-  }
+    if (playerColor == 1) {
+        $('#c_black').css("color", "yellow");
+        $('#c_white').css("color", "black");
+    }
+    if (playerColor == -1) {
+        $('#c_white').css("color", "yellow");
+        $('#c_black').css("color", "black");
+    }
 
 }
 
@@ -282,61 +283,58 @@ function whosturn() {
  * @constructor
  */
 function Move(_index, _c) {
-  var a = Attack(_index, _c);
-  if (!a.length) return;
-  m[_index] = _c;
-  Display(_index, _c);
-  for (var i = 0; i < a.length; ++i) {
-    m[a[i]] = _c;
-    Display(a[i], _c);
-  }
-  ShowNum();
-  end = IsEnd();
-  for (var i = 0; i < 64; ++i)
-    $('.grids')[i].style.backgroundColor = 'green';
-  if (end) {
-    runningFlag = false;
-    if (ShowNum() == 0)
-    {
-      swal({
-        text:"平局！"
-      }).then(()=>{
-        window.location="lobby";
-      })
+    var a = Attack(_index, _c);
+    if (!a.length) return;
+    m[_index] = _c;
+    Display(_index, _c);
+    for (var i = 0; i < a.length; ++i) {
+        m[a[i]] = _c;
+        Display(a[i], _c);
     }
-    if (ShowNum() == myMove)
-    {
-      swal({
-        text:"你赢了！"
-      }).then(()=>{
-        window.location="lobby";
-      })
+    ShowNum();
+    end = IsEnd();
+    for (var i = 0; i < 64; ++i)
+        $('.grids')[i].style.backgroundColor = 'green';
+    if (end) {
+        runningFlag = false;
+        if (ShowNum() == 0) {
+            swal({
+                text: "平局！"
+            }).then(() => {
+                window.location = "lobby";
+            })
+        }
+        if (ShowNum() == myMove) {
+            swal({
+                text: "你赢了！"
+            }).then(() => {
+                window.location = "lobby";
+            })
+        }
+        if (ShowNum() == -1 * myMove) {
+            swal({
+                text: "你输了！"
+            }).then(() => {
+                window.location = "lobby";
+            })
+        }
     }
-    if (ShowNum() == -1 * myMove)
-    {
-      swal({
-        text:"你输了！"
-      }).then(()=>{
-        window.location="lobby";
-      })
-    }
-  }
 }
 
 /**
  * 投降按钮事件
  */
 function res() {
-  swal({
-    text:"你输了！"
-  }).then(()=>{
-    socket.emit("resign",username);
-    window.location="lobby";
-  })
+    swal({
+        text: "你输了！"
+    }).then(() => {
+        socket.emit("resign", username);
+        window.location = "lobby";
+    })
 }
 
 $("#headico").click(function () {
-  $('#change').modal('show');
+    $('#change').modal('show');
 });
 // function AI_1(_c)
 // {
@@ -357,12 +355,12 @@ $("#headico").click(function () {
  * @constructor
  */
 function IsEnd() {
-  var pb = PossiblePlace(-1);
-  var pw = PossiblePlace(1);
-  if (!pb.length && !pw.length) {
-    return true;
-  }
-  return false;
+    var pb = PossiblePlace(-1);
+    var pw = PossiblePlace(1);
+    if (!pb.length && !pw.length) {
+        return true;
+    }
+    return false;
 
 }
 
@@ -371,15 +369,17 @@ function IsEnd() {
  * 倒数计时
  */
 function countDown() {
-  if (sec > 0) {
-    time.innerHTML = sec--;
-  } else {
-    playerColor = playerColor * -1;//轮换
-    ShowHint();
-    sec = 30;//设置倒计时时间为30秒
-  }
-  t = setTimeout('countDown()', 1000);
+    if (sec > 0) {
+        time.innerHTML = sec--;
+    } else {
+        playerColor = playerColor * -1;//轮换
+        ShowHint();
+        sec = 30;//设置倒计时时间为30秒
+    }
+    t = setTimeout('countDown()', 1000);
 }
+
+
 
 
 

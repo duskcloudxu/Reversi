@@ -58,6 +58,7 @@ router.get('/register', (req, res) => {
 
 });
 router.post('/uploadImage',(req,res)=>{
+    console.log(req.body);
     if(req.body.img){
         res.send("success");
     }
