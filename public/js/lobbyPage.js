@@ -59,8 +59,8 @@ $(function () {
             alert("消息不能为空");
             return;
         }
-        else {
-            str = '<div class="atalk"><span>' + $("#msg").val() + '</span></div>';
+        else{
+            str = '<div class="talk_name"><span>'+'Azizi:'+'</span></div>'+'<div class="atalk"><span>'+ $("#msg").val() +'</span></div>' ;
         }
 
         $("#display_msg").html($("#display_msg").html() + str);
