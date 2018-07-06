@@ -1,11 +1,65 @@
-var playerColor;
+var playerColor;//玩家棋子颜色
 var runningFlag = false;
 var dir_x = [1, 1, 0, 0, 1, -1, -1, -1];
 var dir_y = [1, -1, 1, -1, 0, 0, -1, 1];
 var m = [];
 var flag = 0;
-
+//white: 1
+//black: -1
+//none: 0
 var t;
+var username = Cookies.get("username");
+var socket = io();
+$("#user_name").text(username);
+/**
+ *ready按钮点击事件
+ */
+$("#ready").click(function () {
+    PickColor(-1);
+    $("#choose_color").fadeOut();
+    countDown();
+});
+/**
+ *grid网格数组点击事件
+ */
+function ClickGrid(_this)
+{
+    if (!runningFlag) return;
+    if (m[_this.index] != 0) return;
+    if (!Attack(_this.index, playerColor).length) return;
+    Move(_this.index, playerColor);
+    var p = PossiblePlace(playerColor*-1);
+    if (!p.length){
+        ShowNum();
+        ShowHint();
+    }
+    //setTimeout("AI_1("+playerColor * -1+")", 1000);
+    playerColor = playerColor*-1;
+    ShowHint();
+    if(p.length==0)
+    {
+        playerColor = playerColor*-1;
+        ShowHint();
+    }
+    sec = 30;
+}
+/**
+ *显示合法落子位置
+ */
+function ShowHint()
+{
+    var p = PossiblePlace(playerColor);
+    for (var i = 0;i < 64;++i) {
+        $('.grids')[i].style.backgroundColor = 'green';
+    }
+    for (var i = 0;i < p.length;++i) {
+        $('.grids')[p[i]].style.backgroundColor = 'rgb(0, 40, 0)';
+    }
+    whosturn();
+}
+/**
+ *初始化
+ */
 function Init()
 {
     sec = 30;
@@ -31,19 +85,30 @@ function Init()
 
     clearTimeout(t);
 }
+
+/**
+ * 根据传入的颜色参数选颜色
+ * @param _c 颜色参数
+ * @constructor
+ */
 function PickColor(_c)
 {
     playerColor = _c;
-    if (playerColor == -1)
-        ShowHint();
-    else
+
+    $('#c_black').css("color","yellow");
+    $('#c_white').css("color","black");
+    ShowHint();
         //setTimeout("AI_1("+playerColor * -1+")", 1000);
-        ShowHint();
+
     runningFlag = true;
 }
-//white: 1
-//black: -1
-//none: 0
+
+/**
+ * 显示棋子
+ * @param _index 网格位置
+ * @param _color 颜色参数
+ * @constructor
+ */
 function Display(_index, _color)
 {
     if(_color==0){
@@ -59,8 +124,16 @@ function Display(_index, _color)
 $(document).ready(function(){
     sec = 30
     Init();
+
 });
 
+/**
+ * 根据落子位置生成变色棋子的位置信息
+ * @param _index 位置参数
+ * @param _c 颜色参数
+ * @returns {Array} 落子之后变色的每一个位置
+ * @constructor
+ */
 function Attack(_index, _c)
 {
     var attack = [];
@@ -94,6 +167,12 @@ function Attack(_index, _c)
     return attack;
 }
 
+/**
+ * 生成黑或白棋的合法落子位置数组
+ * @param _c 颜色参数
+ * @returns {Array} 合法落子位置数组
+ * @constructor
+ */
 function PossiblePlace(_c)
 {
     var p = [];
@@ -104,39 +183,12 @@ function PossiblePlace(_c)
     return p;
 }
 
-function ShowHint()
-{
-    var p = PossiblePlace(playerColor);
-    for (var i = 0;i < 64;++i) {
-        $('.grids')[i].style.backgroundColor = 'green';
-    }
-    for (var i = 0;i < p.length;++i) {
-        $('.grids')[p[i]].style.backgroundColor = 'rgb(0, 40, 0)';
-    }
-}
 
-function ClickGrid(_this)
-{
-    if (!runningFlag) return;
-    if (m[_this.index] != 0) return;
-    if (!Attack(_this.index, playerColor).length) return;
-    Move(_this.index, playerColor);
-    var p = PossiblePlace(playerColor*-1);
-    if (!p.length){
-        ShowNum();
-        ShowHint();
-    }
-    //setTimeout("AI_1("+playerColor * -1+")", 1000);
-    playerColor = playerColor*-1;
-    ShowHint();
-    if(p.length==0)
-    {
-        playerColor = playerColor*-1;
-        ShowHint();
-    }
-    sec = 30;
-}
-
+/**
+ * 更新棋子数并返回优势
+ * @returns {number} 黑子或白子优势
+ * @constructor
+ */
 function ShowNum()
 {
     var wn = 0, bn = 0;
@@ -144,13 +196,36 @@ function ShowNum()
         if (m[i] == -1) ++bn;
         if (m[i] == 1) ++wn;
     }
-    $('#c_black')[0].innerText = bn;
-    $('#c_white')[0].innerText = wn;
+    $('#c_white')[0].innerText = bn;
+    $('#c_black')[0].innerText = wn;
+    whosturn();
     if (bn > wn) return -1;
     if (bn == wn) return 0;
     if (bn < wn) return 1;
 }
+
+/**
+ * 谁的回合
+ */
+function whosturn() {
+    if (playerColor == 1){
+        $('#c_black').css("color","yellow");
+        $('#c_white').css("color","black");
+    }
+    if(playerColor == -1){
+        $('#c_white').css("color","yellow");
+        $('#c_black').css("color","black");
+    }
+
+}
 var end;
+
+/**
+ * 根据落子位置和颜色引用各个函数来得到最终结果
+ * @param _index 落子位置
+ * @param _c 棋子颜色
+ * @constructor
+ */
 function Move(_index, _c)
 {
     var a = Attack(_index, _c);
@@ -177,25 +252,37 @@ function Move(_index, _c)
         $('#end_info').modal('show');
     }
 }
+
+/**
+ * 投降按钮事件
+ */
 function res() {
     runningFlag = false;
     $('#result')[0].innerText = 'You lose!';
     $('#end_info').modal('show');
 }
-function AI_1(_c)
-{
-    var p = PossiblePlace(_c);
-    if (p.length == 0) return false;
-    var r = Math.floor(Math.random()*100) % p.length;
-    Move(p[r], _c);
-    ShowHint();
-    var p = PossiblePlace(_c*-1);
-    if (!p.length){
-        setTimeout("AI_1("+_c+")", 1000);
-    }
-    return true;
-}
 
+$("#headico").click(function () {
+    $('#change').modal('show');
+});
+// function AI_1(_c)
+// {
+//     var p = PossiblePlace(_c);
+//     if (p.length == 0) return false;
+//     var r = Math.floor(Math.random()*100) % p.length;
+//     Move(p[r], _c);
+//     ShowHint();
+//     var p = PossiblePlace(_c*-1);
+//     if (!p.length){
+//         setTimeout("AI_1("+_c+")", 1000);
+//     }
+//     return true;
+// }
+/**
+ * 判断棋局是否结束并返回判断结果
+ * @returns {boolean}
+ * @constructor
+ */
 function IsEnd()
 {
     var pb = PossiblePlace(-1);
@@ -208,15 +295,18 @@ function IsEnd()
 }
 var sec = 30;
 
-function countDown(){         //一进该页面就加载以下方法
+/**
+ * 倒数计时
+ */
+function countDown(){
     if(sec > 0) {
         time.innerHTML = sec--;
     } else {
-        playerColor = playerColor*-1;
+        playerColor = playerColor*-1;//轮换
         ShowHint();
-        sec = 30;//轮换
-    }                     //显示右下角日期的方法
-    t = setTimeout('countDown()',1000);    //一般秒设置为参数为1000
+        sec = 30;//设置倒计时时间为30秒
+    }
+    t = setTimeout('countDown()',1000);
 }
-                 //设置倒计时时间为30秒
+
 

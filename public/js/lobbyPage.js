@@ -153,6 +153,7 @@ $(function () {
         console.log(msg);
         var str = '<div class="talk_name"><span>' + msg.username + ':' + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
         $("#display_msg").html($("#display_msg").html() + str);
+        $("#display_msg").scrollTop($("#display_msg").height());
     })
 
 });
