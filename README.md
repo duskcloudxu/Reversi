@@ -44,7 +44,7 @@ http://localhost:3000/game
 - 密码加密存储
 - 注册字符检查[halfSolved: 没有加提示语与请求，但是加了限制。]
 - 用正则优化注册检查
-- 增加上传头像功能
+- 增加上传头像功能 [实现js文件路径为: public/lib/cropperClipping/clippingTool.js]
 - 路由规范
 ##感想
 ###mongoose的数据库链接真的是贴心到气人：

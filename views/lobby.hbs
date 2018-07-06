@@ -6,14 +6,15 @@
     <link rel='stylesheet' href='stylesheets/lobby.css'/>
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="lib/sweetAlert2/sweetalert2.css">
-
+    <link rel="stylesheet" href="lib\cropperClipping\cropper.min.css">
+    <link rel="stylesheet" href="lib\cropperClipping\ImgCropping.css">
 
 </head>
 <body class="lobby_b">
 <nav class="navbar navbar-expand-sm bacolorgreen">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <img class="img " src="img/test.jpg"/>
+            <img id="headico" class="img " src="img/test.jpg"/>
         </li>
         <li class="nav-item">
             <span id="user_name" class="nav-link font_white bottom" href="#">NAME</span>
@@ -60,6 +61,35 @@
         <div id="display_msg" class="pre-scrollable hmax"></div>
     </div>
 </div>
+<!--图片裁剪框 start-->
+<div style="display: none" class="tailoring-container">
+    <div class="black-cloth" onclick="closeTailor(this)"></div>
+    <div class="tailoring-content">
+        <div class="tailoring-content-one">
+            <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+                <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)">
+                选择图片
+            </label>
+            <div class="close-tailoring"  onclick="closeTailor(this)">×</div>
+        </div>
+        <div class="tailoring-content-two">
+            <div class="tailoring-box-parcel">
+                <img id="tailoringImg">
+            </div>
+            <div class="preview-box-parcel">
+                <p>图片预览：</p>
+                <div class="square previewImg"></div>
+            </div>
+        </div>
+        <div class="tailoring-content-three">
+            <button class="l-btn cropper-reset-btn">复位</button>
+            <button class="l-btn cropper-rotate-btn">旋转</button>
+            <button class="l-btn cropper-scaleX-btn">换向</button>
+            <button class="l-btn sureCut" id="sureCut">确定</button>
+        </div>
+    </div>
+</div>
+<!--图片裁剪框 end-->
 </body>
 <script src="lib/jquery/jquery.js"></script>
 <script src="lib/popper/popper.js"></script>
@@ -67,6 +97,7 @@
 <script src="lib/sweetAlert2/sweetalert2.js"></script>
 <script src="lib/socketIO/socket.io.js"></script>
 <script src="lib/js-cookie/js.cookie.js"></script>
-
+<script src="lib/cropperClipping/cropper.min.js"></script>
+<script src="lib/cropperClipping/clippingTool.js"></script>
 <script src="js/lobbyPage.js"></script>
 </html>
