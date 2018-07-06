@@ -3,6 +3,7 @@ $(function () {
     var count = 0;
     var username=Cookies.get("username");
     console.log(username);
+    $("#user_name").text(username);
     if(username===undefined){
         swal({
             type:"error",
@@ -60,10 +61,11 @@ $(function () {
             return;
         }
         else{
-            str = '<div class="talk_name"><span>'+'Azizi:'+'</span></div>'+'<div class="atalk"><span>'+ $("#msg").val() +'</span></div>' ;
+            str = '<div class="talk_name"><span>'+username+':'+'</span></div>'+'<div class="atalk"><span>'+ $("#msg").val() +'</span></div>' ;
         }
 
         $("#display_msg").html($("#display_msg").html() + str);
         $("#msg").val("");
+
     });
 });
