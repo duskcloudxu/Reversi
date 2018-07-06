@@ -192,5 +192,13 @@ io.on('connection', (socket) => {
         var targetSocket = user2socket[user2user[username]];
         targetSocket.emit("resign");
     })
+    socket.on('privateChat', (msg) => {
+        console.log(msg);
+        var username=msg.username;
+        var oppoName=user2user(username);
+        var opppSocket=user2socket(oppoName);
+        socket.emit('privateChat', msg);
+        opppSocket.emit('privateChat',msg);
+    });
 });
 

@@ -190,15 +190,15 @@ $(function () {
                 username: username,
                 content: content
             };
-            socket.emit('chatMessage', msg);
+            socket.emit('privateChat', msg);
 
         }
         $("#msg_m").val("");
     });
 
-    socket.on("chatMessageClient", (msg) => {
+    socket.on("privateChat", (msg) => {
         console.log(msg);
-        var str = '<div class="talk_name"><span>' + ':'+ msg.username  + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
+        var str = '<div class="talk_name"><span>' + msg.username  + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
         $("#display_msg_m").html($("#display_msg_m").html() + str);
         $("#display_msg_m").scrollTop($("#display_msg_m").height());
     })

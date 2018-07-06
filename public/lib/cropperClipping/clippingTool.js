@@ -80,7 +80,7 @@ $("#sureCut").on("click",function () {
         $("#headico").prop("src",base64url);//显示为图片的形式
         $.ajax({
             type: 'post',
-            url: 'http://localhost:3000/test/uploadImage',
+            url: 'http://'+window.location.host+'/test/uploadImage',
             data: {
                 img: base64url,
             },
