@@ -14,9 +14,10 @@ $(document).ready(() => {
     $("#login").click((e) => {
         let username = $("#username_input").val();
         let password = $("#pass_input").val();
+        let currentURL=window.location.host;
         console.log([username, password]);
         $.ajax({
-            url: 'http://localhost:3000/test/login',
+            url: "http://"+currentURL+'/test/login',
             data: {
                 username: username,
                 password: password,

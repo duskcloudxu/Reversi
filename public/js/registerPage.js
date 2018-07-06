@@ -16,6 +16,7 @@ $(document).ready(() => {
         let username = $("#username_input_reg").val();
         let password = $("#pass_input_reg").val();
         let confirmPassword = $("#pass_input_cf").val();
+        let currentURL=window.location.host;
         var regn=/^[a-zA-Z][a-zA-Z0-9]{4,9}$/;
         //检测输入内容是否匹配正则表达式
         if(!regn.test(username)){
@@ -62,7 +63,7 @@ $(document).ready(() => {
         }
 
         $.ajax({
-            url: 'http://localhost:3000/test/register',
+            url: "http://"+currentURL+'/test/register',
             data: {
                 username: username,
                 password: password,
