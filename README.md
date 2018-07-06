@@ -8,10 +8,10 @@
 ![socket.io](https://img.shields.io/badge/Bootstrap-4.1.1-8627cc.svg)
 ![socket.io](https://img.shields.io/badge/nodeJS-8.11.1-32ca55.svg)
 
-| 协力者                                        | 模块                                             |
-| --------------------------------------------- | ------------------------------------------------ |
-| [lvjingzhi](https://github.com/lvjingzhi)     | 前端页面编写，UI设计，黑白棋模块编写             |
-| [duskcloudxu](https://github.com/duskcloudxu) | 框架搭建，数据库连接，socketio连接，后台逻辑编写 |
+| 协力者                                        | 模块                                                         |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| [lvjingzhi](https://github.com/lvjingzhi)     | 前端页面编写，UI设计，黑白棋模块编写                         |
+| [duskcloudxu](https://github.com/duskcloudxu) | 框架搭建，数据库连接，socketio连接，后台逻辑编写，前台和后台逻辑有关的接口编写 |
 
 介绍：这是一个基于socket.io实现的多人黑白棋网络对战游戏。
 
@@ -46,6 +46,8 @@ http://localhost:3000/game
 - 用正则优化注册检查
 - 增加上传头像功能 [实现js文件路径为: public/lib/cropperClipping/clippingTool.js]
 - 路由规范
+- 前端离开当前网页的提示
+- 图片上传
 ##感想
 ###mongoose的数据库链接真的是贴心到气人：
 ```
@@ -116,6 +118,10 @@ socket.broadcast.emit('chatMessageClient',msg);
 
 恰恰相反，它会让所有非A的连接到客户端的机器收到msg。
 
+- socket的刷新
+
+  socket对象会在页面进行刷新或者转换的时候掉线，然后转换到game界面的时候调用了原来user2socket对应的socket链接，然后就悲剧的debug了半个小时……
+
 
 ##代码审查：
 - 发现bug若干
@@ -153,3 +159,7 @@ roomList={
 ​	}
 
 }
+
+## 可以改进的部分
+
+socket建立的不同标志的链接实在是有点多，这个结构个人觉得存在优化的可能性。
