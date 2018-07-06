@@ -7,7 +7,7 @@ $(function () {
     var count = 0;
     var username = Cookies.get("username");
     var socket = io();
-
+    var avatarSrc = "../img/test.jpg";
     /**
      * 登陆模块
      */
@@ -26,14 +26,14 @@ $(function () {
      * 大厅功能模块
      */
     /*
-    在进入的时候更新socket
+     在进入的时候更新socket
      */
-    socket.emit("socketUpdate",username);
+    socket.emit("socketUpdate", username);
 
     //点击按钮事件绑定
     $(".img_seat").click(function (e) {
         if (toggle && $(this).attr("title") == "0" && $(this).attr("seated") == "0") {
-            $(this).attr("src", "../img/test.jpg");
+            $(this).prop("src",avatarSrc);
             toggle = false;
             $(this).attr("title", "1");
             $(e.target).parent().find('.btnGroup').css("visibility", "visible");
@@ -100,22 +100,22 @@ $(function () {
             var currentDesk = $(deskList[i]);
             if (roomList[i].userList[0] !== null) {//进入时绑定图片，退出时取消图片
                 $(currentDesk).find(".img_left").attr("src", "../img/test.jpg");
-                $(currentDesk).find(".img_left").attr("seated","1");
+                $(currentDesk).find(".img_left").attr("seated", "1");
 
             }
             else {
                 $(currentDesk).find(".img_left").attr("src", "../img/u34.png");
-                $(currentDesk).find(".img_left").attr("seated","0");
+                $(currentDesk).find(".img_left").attr("seated", "0");
 
             }
             if (roomList[i].userList[1] !== null) {
                 $(currentDesk).find(".img_right").attr("src", "../img/test.jpg");
-                $(currentDesk).find(".img_right").attr("seated","1");
+                $(currentDesk).find(".img_right").attr("seated", "1");
 
             }
             else {
                 $(currentDesk).find(".img_right").attr("src", "../img/u34.png");
-                $(currentDesk).find(".img_right").attr("seated","0");
+                $(currentDesk).find(".img_right").attr("seated", "0");
             }
         }
     });
@@ -198,9 +198,31 @@ $(function () {
 
     socket.on("privateChat", (msg) => {
         console.log(msg);
-        var str = '<div class="talk_name"><span>' + msg.username  + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
+        var str = '<div class="talk_name"><span>' + msg.username + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
         $("#display_msg_m").html($("#display_msg_m").html() + str);
         $("#display_msg_m").scrollTop($("#display_msg_m").height());
     })
 
+    $("#sureCut").on("click",function () {
+        if ($("#tailoringImg").attr("src") == null ){
+            return false;
+        }else{
+            var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
+            var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
+            $("#headico").prop("src",base64url);//显示为图片的形式
+            // $.ajax({
+            //     type: 'post',
+            //     url: 'http://'+window.location.host+'/test/uploadImage',
+            //     data: {
+            //         img: base64url,
+            //     },
+            //     success: (data) => {
+            //         alert(data);
+            //     }
+            // });
+            //关闭裁剪框
+            avatarSrc=base64url;
+            closeTailor();
+        }
+    });
 });

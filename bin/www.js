@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
     socket.emit("roomListUpdate", roomList);
     socket.on("disconnect", () => {
         console.log("A member disconnected");
-        if (socket.request.headers.referer === "http://localhost:3000/lobby") {
+        if (socket.request.headers.referer.search("/lobby")!==-1) {
             var username = socket2user[socket.id];
             var pos = user2pos[username];
             console.log(username, pos);
@@ -121,7 +121,7 @@ io.on('connection', (socket) => {
             }
             socket.broadcast.emit("roomListUpdate", roomList);
         }
-        if (socket.request.headers.referer === "http://localhost:3000/game") {
+        if (socket.request.headers.referer.search("/game")!==-1) {
             var username = socket2user[socket.id];
             var oppoName = user2user[username];
             user2user[username] = "%quited";
