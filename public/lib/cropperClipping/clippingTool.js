@@ -78,16 +78,16 @@ $("#sureCut").on("click",function () {
         var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
         var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
         $("#headico").prop("src",base64url);//显示为图片的形式
-        $.ajax({
-            type: 'post',
-            url: 'http://'+window.location.host+'/test/uploadImage',
-            data: {
-                img: base64url,
-            },
-            success: (data) => {
-                alert(data);
-            }
-        });
+        // $.ajax({
+        //     type: 'post',
+        //     url: 'http://'+window.location.host+'/test/uploadImage',
+        //     data: {
+        //         img: base64url,
+        //     },
+        //     success: (data) => {
+        //         alert(data);
+        //     }
+        // });
         //关闭裁剪框
         closeTailor();
     }
