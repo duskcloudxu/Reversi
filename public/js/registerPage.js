@@ -10,6 +10,29 @@ $(document).ready(() => {
         });
     }
     listenToEnter();
+    $("#username_input_reg").change((e) => {
+        let username = $("#username_input_reg").val();
+        var regn=/^[a-zA-Z][a-zA-Z0-9]{4,9}$/;
+        //检测输入内容是否匹配正则表达式
+        if(!regn.test(username)) {
+            $("#s1").css("visibility","visible");
+        }
+    });
+    $("#pass_input_reg").change((e) => {
+        let password = $("#pass_input_reg").val();
+        var regp=/^\S{6,16}$/;
+        //检测输入内容是否匹配正则表达式
+        if(regp.test(password)==false){
+            $("#s2").css("visibility","visible");
+        }
+    });
+    $("#pass_input_cf").change((e) => {
+        let confirmPassword = $("#pass_input_cf").val();
+        let password = $("#pass_input_reg").val();
+        if (confirmPassword !== password) {
+            $("#s3").css("visibility","visible");
+        }
+    });
 
     $("#register").click((e) => {
         isTyping = false;

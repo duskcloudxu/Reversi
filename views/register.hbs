@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="input_block">
-                <input id="username_input_reg" class="input_style form-control" type="text">
-                <span id='s1'></span>
+                <input id="username_input_reg" class="input_style form-control" type="text" >
+                <span id='s1' class="warning" style="visibility: hidden">用户名为非数字开头的5-10位数字或字母组成</span>
                 <!--用户名输入-->
             </div>
             <div class="title_block">
@@ -38,6 +38,7 @@
             </div>
             <div class="input_block" >
                 <input id="pass_input_reg" class="input_style form-control" type="password">
+                <span id='s2' class="warning" style="visibility: hidden">密码必须是6位以上16位以内</span>
                 <!--密码输入-->
             </div>
             <div class="title_block">
@@ -48,6 +49,7 @@
             </div>
             <div class="input_block" >
                 <input id="pass_input_cf" class="input_style form-control" type="password">
+                <span id='s3' class="warning" style="visibility: hidden">两次密码不同</span>
                 <!--密码输入-->
             </div>
             <button class="btn btn-warning" type="button" id="register">REGISTER</button>
