@@ -86,7 +86,7 @@ $(document).ready(() => {
         }
 
         $.ajax({
-            url: "http://"+currentURL+'/test/register',
+            url: "http://"+currentURL+'/register/register',
             data: {
                 username: username,
                 password: password,

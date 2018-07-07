@@ -17,7 +17,7 @@ $(document).ready(() => {
         let currentURL=window.location.host;
         console.log([username, password]);
         $.ajax({
-            url: "http://"+currentURL+'/test/login',
+            url: "http://"+currentURL+'/login',
             data: {
                 username: username,
                 password: password,

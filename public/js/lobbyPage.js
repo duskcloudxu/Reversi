@@ -138,7 +138,7 @@ $(function () {
     $(window).keypress((e) => {
         console.log(e.keyCode);
         if (e.keyCode === 13) {
-            $("#send_m").click();
+            $("#send").click();
         }
     });
 
