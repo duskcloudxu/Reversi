@@ -265,7 +265,7 @@ roomList={
 
 ### 登陆界面
 
-![img](file:///C:\Users\duskcloud\Documents\Tencent Files\624126503\Image\C2C\JW5Q7{M$D$6%9~LKBLTJH`E.png) 
+![1530923300396](assets/1530923300396.png) 
 
 ### 注册界面
 
