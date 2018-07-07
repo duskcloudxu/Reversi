@@ -1,4 +1,4 @@
-#黑白棋
+# 黑白棋
 
 
 ![socket.io](https://img.shields.io/badge/socket.io-2.1.1-yellowgreen.svg)
@@ -17,12 +17,12 @@
 
 
 
-##使用说明
+## 使用说明
 下载完成后运行在cmd中运行一下代码来安装依赖
 ```
 npm install
 ```
-##编辑说明
+## 编辑说明
 登陆界面为：
 ```
 http://localhost:3000/
@@ -39,7 +39,7 @@ http://localhost:3000/game
 具体bootstrap,Jquery的使用案例请参考test.hbs这个模板
 
 （但是javascript记得分到public下的文件夹对每个页面单独写一个）
-##TODOLIST:
+## TODOLIST:
 - jquery 双向绑定 [使用场景有限]
 - 密码加密存储[加个hash就行了感觉没啥具体意义]
 - 注册字符检查
@@ -48,8 +48,8 @@ http://localhost:3000/game
 - 路由规范[solved]
 - 前端离开当前网页的提示[没有什么实际意义]
 - 图片上传[由于神奇的post链接数据丢失问题导致没有完成]
-##感想
-###mongoose的数据库链接真的是贴心到气人：
+## 感想
+### mongoose的数据库链接真的是贴心到气人：
 ```
 model = mongoose.model('user', users);
 ```
@@ -122,8 +122,7 @@ socket.broadcast.emit('chatMessageClient',msg);
 
   socket对象会在页面进行刷新或者转换的时候掉线，然后转换到game界面的时候调用了原来user2socket对应的socket链接，然后就悲剧的debug了半个小时……
 
-
-##代码审查：
+## 代码审查：
 - 发现bug若干
 - 发现ID和需求对不上号若干
 - 发现less文件写的过于繁琐
@@ -191,7 +190,7 @@ roomList={
 
 - 所以说有些时候不能因为有些事情看起来很复杂就不去做，这有可能让你陷入更大的麻烦中233
 
-##文件结构
+## 文件结构
 
 ├─bin 这个文件确定了nodejs的监听端口，启动也是启动这个文件，但是因为里面的server不能被exports,socketio又需要server实例作为参数来确定监听端口，故socketIO里的服务器端函数直接写在了www.js里面。
 │      www.js       
@@ -268,7 +267,7 @@ roomList={
 
 ![img](file:///C:\Users\duskcloud\Documents\Tencent Files\624126503\Image\C2C\JW5Q7{M$D$6%9~LKBLTJH`E.png) 
 
-###注册界面
+### 注册界面
 
 ![1530921948098](assets/1530921948098.png)
 
