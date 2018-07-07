@@ -138,7 +138,7 @@ $(function () {
     $(window).keypress((e) => {
         console.log(e.keyCode);
         if (e.keyCode === 13) {
-            $("#send").click();
+            $("#send_m").click();
         }
     });
 
@@ -171,6 +171,36 @@ $(function () {
         var str = '<div class="talk_name"><span>' + msg.username + ':' + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
         $("#display_msg").html($("#display_msg").html() + str);
         $("#display_msg").scrollTop($("#display_msg").height());
+    })
+
+
+    /**
+     * 镜像聊天室（就改了人名-消息模块的text-align）
+     */
+    $("#send_m").click(function () {
+        //定义空字符串
+        var content = $("#msg_m").val();
+        if (content == "") {
+            // 消息为空时弹窗
+            alert("消息不能为空");
+            return;
+        }
+        else {
+            var msg = {
+                username: username,
+                content: content
+            };
+            socket.emit('chatMessage', msg);
+
+        }
+        $("#msg_m").val("");
+    });
+
+    socket.on("chatMessageClient", (msg) => {
+        console.log(msg);
+        var str = '<div class="talk_name"><span>' + ':'+ msg.username  + '</span></div>' + '<div class="atalk"><span>' + msg.content + '</span></div>';
+        $("#display_msg_m").html($("#display_msg_m").html() + str);
+        $("#display_msg_m").scrollTop($("#display_msg_m").height());
     })
 
 });

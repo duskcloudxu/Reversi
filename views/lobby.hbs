@@ -53,12 +53,19 @@
 
         {{/each}}
     </div>
-    <div class="chatroom">
+    <div class="chatroom" style="display: none;" >
         <div class="msg_send">
             <input id="msg" class="chat form-control" type="text">
             <button id="send" class="btn btn-success btn_z">SEND</button>
         </div>
         <div id="display_msg" class="pre-scrollable hmax"></div>
+    </div>
+    <div class="chatroom" style="text-align: right" >
+        <div class="msg_send">
+            <input id="msg_m" class="chat form-control" type="text">
+            <button id="send_m" class="btn btn-success btn_z">SEND</button>
+        </div>
+        <div id="display_msg_m" class="pre-scrollable hmax"></div>
     </div>
 </div>
 <!--图片裁剪框 start-->
